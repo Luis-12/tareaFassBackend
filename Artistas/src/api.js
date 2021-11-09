@@ -13,7 +13,6 @@ app.use('/.netlify/functions/api', router);
 module.exports.handler = serverless(app);
 
 
-const port = process.env.PORT || 1337
 let artistas = []
 
 const loadArtistas = () => {
@@ -21,7 +20,7 @@ const loadArtistas = () => {
     artistas = JSON.parse(data)
   });
 }
-loadArtistas()
+//loadArtistas()
 
 const saveArtistas = () => {
   let data = JSON.stringify(artistas,null,2)
