@@ -21,7 +21,7 @@ const loadArtistas = () => {
     artistas = JSON.parse(data)
   });
 }
-loadArtistas()
+//loadArtistas()
 
 const saveArtistas = () => {
   let data = JSON.stringify(artistas,null,2)
@@ -31,7 +31,10 @@ const saveArtistas = () => {
 
 
 router.get('/', (req, res) => {
-   res.json(artistas);
+     fs.readFile('./src/artistas.json', 'utf8', (err, data) => {
+    if (err) { res.status(404).send('Error');}
+    artistas = JSON.parse(data)
+  });
 })
 
 router.get('/:id', (req, res) => {
