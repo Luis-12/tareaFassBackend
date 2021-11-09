@@ -21,7 +21,7 @@ const loadArtistas = () => {
     artistas = JSON.parse(data)
   });
 }
-//loadArtistas()
+loadArtistas()
 
 const saveArtistas = () => {
   let data = JSON.stringify(artistas,null,2)
