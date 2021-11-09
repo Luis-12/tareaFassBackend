@@ -2,7 +2,7 @@
 const fs = require('fs')
 const express = require('express')
 const serverless = require('serverless-http');
-const exp = require('constants');
+
  
 const app = express();
 const router = express.Router();
@@ -17,6 +17,7 @@ let artistas = []
 
 const loadArtistas = () => {
   fs.readFile('./src/artistas.json', 'utf8', (err, data) => {
+    if (err) throw err;
     artistas = JSON.parse(data)
   });
 }
