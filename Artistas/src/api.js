@@ -5,9 +5,6 @@ const serverless = require('serverless-http');
  
 const app = express();
 const router = express.Router();
-app.use(express.json());
-app.use(router);
-app.use('/.netlify/functions/api', router);
 
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -18,7 +15,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-module.exports.handler = serverless(app);
+
 
 
 let artistas = [
@@ -133,4 +130,10 @@ router.delete('/:id', (req, res) => {
     res.status(200).send('Artista was Added');
   }
 })
+
+
+app.use(express.json());
+app.use(router);
+app.use('/.netlify/functions/api', router);
+module.exports.handler = serverless(app);
 
