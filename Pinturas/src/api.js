@@ -5,11 +5,15 @@ const serverless = require('serverless-http');
  
 const app = express();
 const router = express.Router();
-app.use(express.json());
-app.use(router);
-app.use('/.netlify/functions/api', router);
 
-module.exports.handler = serverless(app);
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Content-Type', 'application/json');
+  next();
+});
 
 
 let pinturas = [
@@ -289,4 +293,10 @@ router.delete('/:id', (req, res) => {
     pinturas = pinturas.filter(i => i.id != req.params.id);
   }
 })
+
+
+app.use(express.json());
+app.use(router);
+app.use('/.netlify/functions/api', router);
+module.exports.handler = serverless(app);
 
