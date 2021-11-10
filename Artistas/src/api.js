@@ -9,8 +9,6 @@ app.use(express.json());
 app.use(router);
 app.use('/.netlify/functions/api', router);
 
-module.exports.handler = serverless(app);
-
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -19,6 +17,9 @@ app.use(function (req, res, next) {
   res.setHeader('Content-Type', 'application/json');
   next();
 });
+
+module.exports.handler = serverless(app);
+
 
 let artistas = [
   {
