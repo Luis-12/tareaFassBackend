@@ -11,6 +11,14 @@ app.use('/.netlify/functions/api', router);
 
 module.exports.handler = serverless(app);
 
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Content-Type', 'application/json');
+  next();
+});
 
 let artistas = [
   {
@@ -99,7 +107,6 @@ router.post('/:id', (req, res) => {
     res.status(404).send('Artista already exits'); 
   else {
     artistas.push(req.body);
-    saveArtistas();
     res.status(200).send('Artista was Added');
   }
 })
@@ -112,7 +119,6 @@ router.put('/', (req, res) => {
     res.status(404).send('Artista not found');
   else {
     artistas[index] = artista;
-    saveArtistas();
     res.status(200).send('Artista was Updated');
   }
 })
@@ -123,7 +129,6 @@ router.delete('/:id', (req, res) => {
     return resolve();
   else {
     artistas = artistas.filter(i => i.id != req.params.id);
-    saveArtistas();
     res.status(200).send('Artista was Added');
   }
 })
